@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================ */
+/*  Aaron Informatique Le Havre — Styles personnalisés
+/*  Palette : bleu nuit #050a18 / #0c1530 · blanc #f4f8ff · cyan #22d3ee
+/* ============================================================================ */
+
+:root {
+  --bg: #050a18;
+  --bg2: #0c1530;
+  --fg: #f4f8ff;
+  --cyan: #22d3ee;
+  --muted: #9fb3d6;
+  --accent: #0b6f85;
+  --ink: #1d2e5c;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------- */
+/*  Typos personnalisées
+/* --------------------------------------------------------------------------- */
+
+/* Display / titres — Space Grotesk bold, lettres très resserrées */
+.dp {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+/* Label / petits titres — Inter uppercase tracking large */
+.lb {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+/* Mono / nombres / prix — JetBrains Mono */
+.tn {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* --------------------------------------------------------------------------- */
+/*  Grille de fond (Hero)
+/* --------------------------------------------------------------------------- */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(34, 211, 238, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 211, 238, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at 70% 30%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, black 30%, transparent 80%);
+}
+
+/* --------------------------------------------------------------------------- */
+/*  Hero — ligne de titre + animation de révélation
+/* --------------------------------------------------------------------------- */
+.ln {
+  display: block;
+  overflow: hidden;
+}
+
+.ln > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: lineUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.ln:nth-child(2) > span { animation-delay: 0.12s; }
+.ln:nth-child(3) > span { animation-delay: 0.24s; }
+
+@keyframes lineUp {
+  to { transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------- */
+/*  Animations "fade up" — utilitaires .fu + retards .f1 .f2
+/* --------------------------------------------------------------------------- */
+.fu {
+  opacity: 0;
+  transform: translateY(28px);
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.f1 { animation-delay: 0.35s; }
+.f2 { animation-delay: 0.5s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------- */
+/*  SVG Hero — effet de dessin + léger tilt 3D
+/* --------------------------------------------------------------------------- */
+.tilt {
+  animation: tilt 9s ease-in-out infinite;
+}
+
+@keyframes tilt {
+  0%, 100% { transform: rotateX(6deg) rotateY(-10deg); }
+  50%      { transform: rotateX(-4deg) rotateY(8deg); }
+}
+
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawIn 2.4s ease-in-out 0.6s forwards;
+}
+
+@keyframes drawIn {
+  to { stroke-dashoffset: 0; }
+}
+
+/* --------------------------------------------------------------------------- */
+/*  Marquee — bandeau défilant infini
+/* --------------------------------------------------------------------------- */
+.mq {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* --------------------------------------------------------------------------- */
+/*  Reveal au scroll — observé par useReveal.js
+/* --------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------- */
+/*  Liste de prestations — effet de survol des rangées
+/* --------------------------------------------------------------------------- */
+.rows li {
+  position: relative;
+}
+
+.rows li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  height: 2px;
+  background: var(--cyan);
+  transition: width 0.4s ease;
+}
+
+.rows li:hover::after {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------- */
+/*  Accessibilité — respect du motion réduit
+/* --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
